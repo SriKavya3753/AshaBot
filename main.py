@@ -12,7 +12,7 @@ from services.mentors_service import MentorsService
 from services.llm_service import LLMService
 
 # Import our simplified auth service
-from simple_auth_service import SimpleAuthService, User, UserCreate
+from services.auth_service import SimpleAuthService, User, UserCreate
 
 app = FastAPI(title="Asha AI Chatbot API")
 security = HTTPBasic()
