@@ -1,7 +1,7 @@
 # Asha AI Chatbot
 
 ## Overview
-Asha AI is an intelligent career assistant specifically designed for women, offering seamless access to job listings, community events, and mentorship programs. Built on a sophisticated retrieval-augmented generation (RAG) architecture with Neo4j graph database integration, Asha delivers context-aware, personalized guidance to support women's professional growth.
+Asha AI is an intelligent career assistant specifically designed for women, offering seamless access to job listings, community events, and mentorship programs. Built on a sophisticated retrieval-augmented generation (RAG) architecture with Neo4j Aura graph database integration, Asha delivers context-aware, personalized guidance to support women's professional growth.
 
 ## Key Features
 
@@ -27,10 +27,11 @@ The application uses FastAPI to create RESTful endpoints that handle user authen
 - `/jobs`, `/events`, `/mentors`: Dedicated endpoints for filtered data retrieval
 - `/users`: Handles user registration and authentication
 
-### Data Layer (Neo4j)
-Leverages Neo4j graph database for efficient storage and retrieval of interconnected career data:
+### Data Layer (Neo4j Aura)
+Leverages Neo4j Aura cloud database for efficient storage and retrieval of interconnected career data:
 - **Graph-Based Storage**: Models relationships between jobs, companies, events, locations, and mentors
 - **Semantic Search**: Enables powerful contextual queries across the knowledge graph
+- **Cloud-Based**: Uses Neo4j Aura for reliable, scalable database operations
 
 ### AI Component
 Utilizes Google's Gemini models for natural language understanding and generation:
@@ -48,7 +49,7 @@ Features an intuitive chat interface with:
 
 ### Prerequisites
 - Python 3.8+
-- Neo4j Database
+- Neo4j Aura Account and Database
 - Google API Key (for Gemini models)
 
 ### Installation
@@ -57,15 +58,15 @@ Features an intuitive chat interface with:
    ```
    pip install -r requirements.txt
    ```
-3. Set up environment variables:
+3. Set up environment variables in Render or locally:
    ```
-   NEO4J_URI=<your-neo4j-uri>
+   NEO4J_URI=<your-neo4j-aura-uri>
    NEO4J_USER=<your-neo4j-username>
    NEO4J_PASSWORD=<your-neo4j-password>
    GEMINI_API_KEY=<your-gemini-api-key>
    ```
 
-### Running the Application
+### Running Locally
 1. Install dependencies:
    ```
    pip install -r requirements.txt
@@ -79,11 +80,29 @@ Features an intuitive chat interface with:
    streamlit run streamlit_app.py
    ```
 
+### Deployment on Render
+The application is deployed on Render with a multi-service architecture:
+
+1. **FastAPI Backend Service**:
+   - Handles all API requests and database interactions
+   - Connects to Neo4j Aura cloud database
+   - Processes chat messages through the RAG system
+
+2. **Streamlit Frontend Service**:
+   - Provides the user interface for interaction
+   - Communicates with the FastAPI backend
+   - Manages the user experience and display of results
+
+3. **Configuration**:
+   - Environment variables are securely stored in Render
+   - Service-to-service communication is handled automatically
+   - Auto-deploy is configured from the GitHub repository
+
 ## Project Structure
 ```
 asha-ai-chatbot/
 ├── database/
-│   └── neo4j_db.py         # Neo4j database connector
+│   └── neo4j_db.py         # Neo4j Aura database connector
 ├── services/
 │   ├── auth_service.py     # Authentication service
 │   ├── events_service.py   # Events data service
@@ -94,10 +113,31 @@ asha-ai-chatbot/
 │   └── rag_utils.py        # RAG implementation
 ├── main.py                 # FastAPI application
 ├── streamlit_app.py        # Streamlit frontend
-├── config.py               # contains Neo4J Aura details
-├── .env                    # contains API key
+├── config.py               # Contains Neo4j Aura connection details
 └── requirements.txt        # Project dependencies
 ```
+
+## Neo4j Aura Integration
+This project uses Neo4j Aura, a fully managed cloud graph database service, with the following benefits:
+- **Zero maintenance**: No need to manage infrastructure
+- **Always-on availability**: High reliability for production workloads
+- **Automatic backups**: Data is regularly backed up
+- **Seamless scaling**: Adjusts to application needs
+- **Enhanced security**: Built-in encryption and security features
+
+## Deployment Guide
+To deploy this application on Render:
+
+1. Fork or clone the repository to your GitHub account
+2. Create a Render account at [render.com](https://render.com)
+3. Connect your GitHub repository to Render
+4. Set up two web services:
+   - FastAPI backend service (pointing to main.py)
+   - Streamlit frontend service (pointing to streamlit_app.py)
+5. Configure environment variables in Render settings for both services
+6. Deploy both services
+
+For detailed deployment instructions, see the deployment guide in the repository.
 
 ## Future Enhancements
 - **Personalized Recommendations**: Learning from user interactions to suggest relevant opportunities
@@ -105,7 +145,7 @@ asha-ai-chatbot/
 - **Resume Analysis**: AI-powered feedback on resume content and structure
 - **Interview Preparation**: Customized guidance for interview success
 - **Mobile Application**: Native mobile experience for on-the-go career assistance
-- **Production Deployment**: Scalable cloud infrastructure for public access
+- **Enhanced Cloud Infrastructure**: Further optimizations for scalability and performance
 
 ## Ethics and Inclusion
 Asha AI is built on ethical AI principles that emphasize:
