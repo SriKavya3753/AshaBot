@@ -94,6 +94,8 @@ asha-ai-chatbot/
 │   └── rag_utils.py        # RAG implementation
 ├── main.py                 # FastAPI application
 ├── streamlit_app.py        # Streamlit frontend
+├── config.py               # contains Neo4J Aura details
+├── .env                    # contains API key
 └── requirements.txt        # Project dependencies
 ```
 
