@@ -1,3 +1,4 @@
+
 #streamlit_app.py
 import streamlit as st
 import requests
@@ -80,9 +81,7 @@ st.markdown("""<style>
     </style>""", unsafe_allow_html=True)
 
 # Get API URL from environment variable or use default for local development
-
-API_URL = os.getenv("API_URL", "https://ashabot.onrender.com")
-
+API_URL = os.environ.get("API_URL", "https://ashabot-anm5.onrender.com")
 
 # Initialize session state
 if "chat_history" not in st.session_state:
@@ -328,7 +327,7 @@ st.markdown("""Your AI career assistant dedicated to helping women find jobs, di
 
 # User info in sidebar
 with st.sidebar:
-    st.markdown(f"**Logged in as:** {st.session_state.username}")
+    st.markdown(f"*Logged in as:* {st.session_state.username}")
     if st.button("Logout"):
         logout()
     
@@ -380,7 +379,7 @@ with chat_container:
             if 'data' in message and 'jobs' in message['data'] and message['data']['jobs']:
                 with st.expander("📊 Job Listings", expanded=True):
                     for job in message['data']['jobs']:
-                        st.markdown(f"**{job['role']} at {job['company_name']}**")
+                        st.markdown(f"{job['role']} at {job['company_name']}")
                         
                         # Create two columns for job details
                         col1, col2 = st.columns(2)
@@ -388,7 +387,7 @@ with chat_container:
                             st.write(f"📍 Location: {job.get('location', 'Not specified')}")
                             st.write(f"🏠 Remote: {'Yes' if job.get('remote', False) else 'No'}")
                             if job.get('hire_time'):
-                                st.write(f"⏱️ Hire Time: {job.get('hire_time')}")
+                                st.write(f"⏱ Hire Time: {job.get('hire_time')}")
                         with col2:
                             if job.get('company_industry'):
                                 st.write(f"🏢 Industry: {job.get('company_industry')}")
@@ -422,7 +421,7 @@ with chat_container:
                         with col2:
                             st.write(f"🌐 Mode: {event.get('mode', 'Not specified')}")
                             if 'categories' in event and event['categories']:
-                                st.write(f"🏷️ Categories: {', '.join(event['categories'])}")
+                                st.write(f"🏷 Categories: {', '.join(event['categories'])}")
                         
                         # Display complete event description without truncation
                         if event.get('about'):
@@ -436,7 +435,7 @@ with chat_container:
                 with st.expander("👩‍💼 Mentor Recommendations", expanded=True):
                     for mentor in message['data']['mentors']:
                         st.markdown(f"### {mentor['name']}")
-                        st.markdown(f"**{mentor['role']} at {mentor['company']}**")
+                        st.markdown(f"{mentor['role']} at {mentor['company']}")
                         
                         # Create two columns for mentor details
                         col1, col2 = st.columns(2)
@@ -445,7 +444,7 @@ with chat_container:
                         with col2:
                             if mentor.get('services') and len(mentor['services']) > 0:
                                 services = [s.strip() for s in mentor['services']]
-                                st.write(f"🛠️ Services: {', '.join(services)}")
+                                st.write(f"🛠 Services: {', '.join(services)}")
                         
                         st.markdown("---")       
 
