@@ -147,7 +147,7 @@ def signup():
         st.markdown("Already have an account?")
         if st.button("Go to Login", key="goto_login"):
             st.session_state.show_login = True
-            st.experimental_rerun()
+            st.rerun()
 
 def signin():
     st.title("Log In")
@@ -181,7 +181,7 @@ def signin():
                         st.session_state.password = password
                         st.session_state.authenticated = True
                         st.success("Logged in successfully!")
-                        st.experimental_rerun()
+                        st.rerun()
                     else:
                         st.error("Invalid username or password")
                 else:
@@ -193,14 +193,14 @@ def signin():
         st.markdown("Don't have an account?")
         if st.button("Create Account", key="goto_signup"):
             st.session_state.show_login = False
-            st.experimental_rerun()
+            st.rerun()
 
 def logout():
     st.session_state.authenticated = False
     st.session_state.username = None
     st.session_state.password = None
     st.session_state.chat_history = []
-    st.experimental_rerun()
+    st.rerun()
 
 # Function to handle example button clicks
 def set_example_text(text):
@@ -265,7 +265,7 @@ def process_message(user_input):
                 elif response.status_code == 401:
                     st.error("Your session has expired. Please login again.")
                     st.session_state.authenticated = False
-                    st.experimental_rerun()
+                    st.rerun()
                 else:
                     st.error(f"Failed to get response from Asha: {response.status_code}")
             except Exception as e:
