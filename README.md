@@ -131,6 +131,7 @@ asha-ai-chatbot/
 ├── streamlit_app.py        # Streamlit frontend
 ├── config.py               # Contains Neo4j Aura connection details
 ├── render.yaml             # Render Blueprint configuration
+├── neo4j_aura_queries.txt  # Contains Neo4j Cypher queries for creating nodes, relationships, and visualizations
 └── requirements.txt        # Project dependencies
 ```
 
