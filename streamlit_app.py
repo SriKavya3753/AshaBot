@@ -116,9 +116,6 @@ def signup():
                 return
                 
             try:
-                # Debug output
-                st.write(f"Sending request to: {API_URL}/users")
-                
                 # Prepare user data
                 user_data = {
                     "username": new_username,
@@ -132,10 +129,6 @@ def signup():
                     f"{API_URL}/users",
                     json=user_data
                 )
-                
-                # Debug response
-                st.write(f"Response status: {response.status_code}")
-                st.write(f"Response body: {response.text}")
                 
                 if response.status_code == 200:
                     st.success("Account created! Please sign in.")
@@ -283,6 +276,7 @@ if not st.session_state.authenticated:
     st.title("Asha AI - Career Assistant for Women")
     st.markdown("""Your AI career assistant dedicated to helping women find jobs, discover events, and get career advice tailored to your professional journey.""")
     
+    # Display either login or signup form based on session state
     if st.session_state.show_login:
         signin()
     else:
