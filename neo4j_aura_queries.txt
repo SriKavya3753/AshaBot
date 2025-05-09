@@ -1,0 +1,98 @@
+# NEO4J AURA Queries:
+
+## For Jobs data:
+
+### Create Company Nodes:
+LOAD CSV WITH HEADERS FROM 'https://drive.google.com/uc?export=download&id=1oJemKWoVrqR0rVtPCHSxV_CvEoG5zsRG' AS row
+MERGE (c:Company {name: row.Company})
+SET c.industry = row.`Company Industry`, 
+    c.size = row.`Company Size`;
+
+### Create Job Nodes:
+LOAD CSV WITH HEADERS FROM 'https://drive.google.com/uc?export=download&id=1oJemKWoVrqR0rVtPCHSxV_CvEoG5zsRG' AS row
+MERGE (j:Job {title: row.`Position Title`})
+SET 
+    j.date = row.Date,
+    j.apply_link = row.Apply,
+    j.work_model = row.`Work Model`,
+    j.location = row.Location,
+    j.company = row.Company,
+    j.hire_time = row.`Hire Time`,
+    j.graduate_time = row.`Graduate Time`,
+    j.company_industry = row.`Company Industry`,
+    j.company_size = row.`Company Size`,
+    j.salary = row.Salary,
+    j.qualifications = row.Qualifications;
+
+### Create Location Nodes:
+LOAD CSV WITH HEADERS FROM 'https://drive.google.com/uc?export=download&id=1oJemKWoVrqR0rVtPCHSxV_CvEoG5zsRG' AS row
+MERGE (l:Location {name: row.Location});
+
+### Create Relationship: Job BELONGS_TO Company
+LOAD CSV WITH HEADERS FROM 'https://drive.google.com/uc?export=download&id=1oJemKWoVrqR0rVtPCHSxV_CvEoG5zsRG' AS row
+MATCH (c:Company {name: row.Company})
+MATCH (j:Job {title: row.`Position Title`})
+MERGE (j)-[:BELONGS_TO]->(c);
+
+### Create Relationship: Job LOCATED_AT Location
+LOAD CSV WITH HEADERS FROM 'https://drive.google.com/uc?export=download&id=1oJemKWoVrqR0rVtPCHSxV_CvEoG5zsRG' AS row
+MATCH (j:Job {title: row.`Position Title`})
+MATCH (l:Location {name: row.Location})
+MERGE (j)-[:LOCATED_AT]->(l);
+
+### Visualization Query:
+MATCH (j:Job)-[r1:BELONGS_TO]->(c:Company),
+      (j)-[r2:LOCATED_AT]->(l:Location)
+RETURN j, c, l, r1, r2;
+
+## For Mentors data:
+
+### Create Mentor Node:
+LOAD CSV WITH HEADERS FROM 'https://drive.google.com/uc?export=download&id=1iauw1bauXyz0sBZDNnLt3GK86o3BypzD' AS row
+MERGE (m:Mentor {name: row.Name})
+SET m.role = row.Role,
+    m.bookings = row.Bookings,
+    m.services = row.`Services Available`;
+
+### Create Company Node:
+LOAD CSV WITH HEADERS FROM 'https://drive.google.com/uc?export=download&id=1iauw1bauXyz0sBZDNnLt3GK86o3BypzD' AS row
+MERGE (c:Company {name: row.Company});
+
+### Mentor WORKS_FOR Company Relationship:
+LOAD CSV WITH HEADERS FROM 'https://drive.google.com/uc?export=download&id=1iauw1bauXyz0sBZDNnLt3GK86o3BypzD' AS row
+MATCH (m:Mentor {name: row.Name})
+MATCH (c:Company {name: row.Company})
+MERGE (m)-[:WORKS_FOR]->(c);
+
+### Visualization Query:
+MATCH (m:Mentor)-[r:WORKS_FOR]->(c:Company)
+RETURN m, c, r;
+
+## For Events data:
+
+### Create Event Node:
+LOAD CSV WITH HEADERS FROM 'https://drive.google.com/uc?export=download&id=1CpK5P87KRc-swr46hCYSuWsCLetYUzdE' AS row
+MERGE (e:Event {name: row.Name})
+SET e.mode = row.Mode,
+    e.location = row.Location,
+    e.start_date = split(row.Date, ' to ')[0],
+    e.end_date = split(row.Date, ' to ')[1],
+    e.timing = row.Time,
+    e.about = row.About;
+
+### Create Location Nodes and OCCURS_AT Relationship:
+MATCH (e:Event)
+MERGE (l:Location {name: e.location})
+MERGE (e)-[:OCCURS_AT]->(l);
+
+### Create Categories and RELATED_TO Relationship:
+MATCH (e:Event)
+WITH e, split(e.about, ', ') AS categories
+UNWIND categories AS category
+MERGE (c:Category {name: category})
+MERGE (e)-[:RELATED_TO]->(c);
+
+### Visualization Query:
+MATCH (e:Event)-[r1:OCCURS_AT]->(l:Location)
+OPTIONAL MATCH (e)-[r2:RELATED_TO]->(c:Category)
+RETURN e, l, c, r1, r2;
