@@ -2,7 +2,7 @@
 import google.generativeai as genai
 from config import GEMINI_API_KEY, CHUNK_SIZE, CHUNK_OVERLAP
 
-class RAGSystem:
+class RAGSystem: 
     def __init__(self):
         genai.configure(api_key=GEMINI_API_KEY)
         self.model = genai.GenerativeModel('gemini-1.5-flash')
