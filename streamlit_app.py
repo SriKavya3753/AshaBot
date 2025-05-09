@@ -80,7 +80,9 @@ st.markdown("""<style>
     </style>""", unsafe_allow_html=True)
 
 # Get API URL from environment variable or use default for local development
-API_URL = os.environ.get("API_URL", "http://localhost:8000")
+
+API_URL = os.getenv("API_URL", "https://ashabot.onrender.com")
+
 
 # Initialize session state
 if "chat_history" not in st.session_state:
