@@ -81,7 +81,7 @@ Features an intuitive chat interface with:
    ```
 
 ### Deployment on Render
-The application is deployed on Render with a multi-service architecture:
+The application is deployed on Render with a multi-service architecture and includes a `render.yaml` configuration file for simplified deployment:
 
 1. **FastAPI Backend Service**:
    - Handles all API requests and database interactions
@@ -97,6 +97,20 @@ The application is deployed on Render with a multi-service architecture:
    - Environment variables are securely stored in Render
    - Service-to-service communication is handled automatically
    - Auto-deploy is configured from the GitHub repository
+
+#### Using render.yaml for One-Click Deployment
+The project includes a `render.yaml` Blueprint specification that enables:
+- One-click deployment of all services
+- Automatic configuration of environment variables
+- Proper service dependencies and relationships
+- Consistent deployment across environments
+
+To deploy using the render.yaml file:
+1. Fork this repository to your GitHub account
+2. Navigate to the Render Dashboard and select "New Blueprint"
+3. Connect your GitHub repository
+4. Review the configuration details
+5. Click "Apply" to deploy all services automatically
 
 ## Project Structure
 ```
@@ -114,6 +128,7 @@ asha-ai-chatbot/
 ├── main.py                 # FastAPI application
 ├── streamlit_app.py        # Streamlit frontend
 ├── config.py               # Contains Neo4j Aura connection details
+├── render.yaml             # Render Blueprint configuration
 └── requirements.txt        # Project dependencies
 ```
 
@@ -124,20 +139,6 @@ This project uses Neo4j Aura, a fully managed cloud graph database service, with
 - **Automatic backups**: Data is regularly backed up
 - **Seamless scaling**: Adjusts to application needs
 - **Enhanced security**: Built-in encryption and security features
-
-## Deployment Guide
-To deploy this application on Render:
-
-1. Fork or clone the repository to your GitHub account
-2. Create a Render account at [render.com](https://render.com)
-3. Connect your GitHub repository to Render
-4. Set up two web services:
-   - FastAPI backend service (pointing to main.py)
-   - Streamlit frontend service (pointing to streamlit_app.py)
-5. Configure environment variables in Render settings for both services
-6. Deploy both services
-
-For detailed deployment instructions, see the deployment guide in the repository.
 
 ## Future Enhancements
 - **Personalized Recommendations**: Learning from user interactions to suggest relevant opportunities
