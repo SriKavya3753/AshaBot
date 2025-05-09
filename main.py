@@ -216,10 +216,6 @@ async def get_mentor_services(current_user: User = Depends(get_current_user),
         return {"services": services}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching mentor services: {str(e)}")
-@app.get("/health")
-def health_check():
-    """API health check endpoint"""
-    return {"status": "ok", "message": "Asha AI API is running"}
 
 if __name__ == "__main__":
     import uvicorn
