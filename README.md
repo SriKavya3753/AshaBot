@@ -3,6 +3,8 @@
 ## Overview
 Asha AI is an intelligent career assistant specifically designed for women, offering seamless access to job listings, community events, and mentorship programs. Built on a sophisticated retrieval-augmented generation (RAG) architecture with Neo4j Aura graph database integration, Asha delivers context-aware, personalized guidance to support women's professional growth.
 
+**Live Demo**: [https://ashabot.streamlit.app/](https://ashabot.streamlit.app/)
+
 ## Key Features
 
 ### 📊 Smart Data Retrieval
@@ -81,7 +83,7 @@ Features an intuitive chat interface with:
    ```
 
 ### Deployment on Render
-The application is deployed on Render with a multi-service architecture and includes a `render.yaml` configuration file for simplified deployment:
+The application is deployed on Render with a multi-service architecture and includes a `render.yaml` configuration file for simplified deployment. The live application is accessible at [https://ashabot.streamlit.app/](https://ashabot.streamlit.app/).
 
 1. **FastAPI Backend Service**:
    - Handles all API requests and database interactions
