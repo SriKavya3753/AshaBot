@@ -201,9 +201,6 @@ async def get_mentor_services(current_user: User = Depends(get_current_user),
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching mentor services: {str(e)}")
 
-print("Registered routes:")
-for route in app.routes:
-    print(f"- {route.path} [{', '.join(route.methods)}]")
 
 if __name__ == "__main__":
     import uvicorn
